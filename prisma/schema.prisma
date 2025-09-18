@@ -47,8 +47,9 @@ model Lesson {
   moduleId      String
   slug          String
   title         String
+ content        String?
   bunnyPath     String
-  durationSec   Int?
+  materialsUrl  String?
   order         Int
   isFreePreview Boolean  @default(false)
   createdAt     DateTime @default(now())

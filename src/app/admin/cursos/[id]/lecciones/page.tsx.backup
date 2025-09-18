@@ -37,7 +37,7 @@ interface Leccion {
   isFreePreview: boolean
   createdAt: string
   content?: string
-  materialsUrl?: string}
+}
 
 interface Modulo {
   id: string
@@ -243,8 +243,7 @@ function EditLessonModal({
     slug: '',
     isFreePreview: false,
     videoUrl: '',
-    content: '' ,
-    materialsUrl: ''
+    content: '' 
   })
 
   useEffect(() => {
@@ -254,8 +253,7 @@ function EditLessonModal({
         slug: lesson.slug,
         isFreePreview: lesson.isFreePreview,
         videoUrl: lesson.bunnyPath || '',
-        content: lesson.content || '',
-        materialsUrl: lesson.materialsUrl || ''
+        content: lesson.content || ''
       })
     }
   }, [lesson])
@@ -345,19 +343,6 @@ function EditLessonModal({
             <TiptapEditor 
               content={formData.content}
               onChange={(content) => setFormData(prev => ({ ...prev, content }))}
-              disabled={isLoading}
-            />
-          </div>
-          <div>
-            <label className="block mb-2 text-sm font-medium text-gray-700">
-              URL de Materiales (Bunny Storage)
-            </label>
-            <input
-              type="url"
-              value={formData.materialsUrl}
-              onChange={(e) => setFormData(prev => ({ ...prev, materialsUrl: e.target.value }))}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="https://storage.bunnycdn.com/archivo.pdf"
               disabled={isLoading}
             />
           </div>
@@ -1238,9 +1223,7 @@ function FormularioLeccion({
     title: '',
     slug: '',
     videoUrl: '',
-    isFreePreview: false,
-    content: "",
-    materialsUrl: ""
+    isFreePreview: false
   })
 
   const generateSlug = (title: string) => {
@@ -1341,29 +1324,6 @@ function FormularioLeccion({
               onChange={(e) => setFormData(prev => ({ ...prev, videoUrl: e.target.value }))}
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="https://ejemplo.com/video.mp4"
-              disabled={isLoading}
-            />
-          </div>
-          <div>
-            <label className="block mb-2 text-sm font-medium text-gray-700">
-              Contenido de la Lección
-            </label>
-            <TiptapEditor 
-              content={formData.content}
-              onChange={(content) => setFormData(prev => ({ ...prev, content }))}
-              disabled={isLoading}
-            />
-          </div>
-          <div>
-            <label className="block mb-2 text-sm font-medium text-gray-700">
-              URL de Materiales (Bunny Storage)
-            </label>
-            <input
-              type="url"
-              value={formData.materialsUrl}
-              onChange={(e) => setFormData(prev => ({ ...prev, materialsUrl: e.target.value }))}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="https://storage.bunnycdn.com/archivo.pdf"
               disabled={isLoading}
             />
           </div>

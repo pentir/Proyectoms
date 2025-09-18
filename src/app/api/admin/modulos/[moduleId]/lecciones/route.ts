@@ -34,7 +34,7 @@ export async function POST(
     const body = await req.json()
     console.log('✅ Datos de lección recibidos:', body)
     
-    const { title, slug, videoUrl, isFreePreview } = body
+    const { title, slug, videoUrl, isFreePreview, content, materialsUrl } = body
 
     if (!title || !slug) {
       return NextResponse.json(
@@ -68,8 +68,9 @@ export async function POST(
         moduleId: params.moduleId,
         order: nuevoOrder,
         bunnyPath: videoUrl || '',
-        durationSec: 0,
-        isFreePreview: isFreePreview || false
+        isFreePreview: isFreePreview || false,
+        content: content || "",
+        materialsUrl: materialsUrl || ""
       }
     })
 

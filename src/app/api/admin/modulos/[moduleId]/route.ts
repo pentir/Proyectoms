@@ -47,10 +47,16 @@ export async function DELETE(
   try {
     console.log('=== DELETE módulo (SIN AUTH) ===', params.moduleId)
     
-    // Verificar que el módulo existe
+    // Verificar que el módulo existe y obtener datos necesarios
     const modulo = await prisma.module.findUnique({
       where: { id: params.moduleId },
-      include: { lessons: true }
+      select: { 
+        id: true, 
+        title: true, 
+        order: true, 
+        courseId: true,
+        lessons: true 
+      }
     })
     
     if (!modulo) {
@@ -62,7 +68,18 @@ export async function DELETE(
       where: { id: params.moduleId }
     })
     
-    console.log('✅ Módulo eliminado exitosamente:', modulo.title)
+    // Recalcular el orden de los módulos restantes
+    await prisma.module.updateMany({
+      where: { 
+        courseId: modulo.courseId,
+        order: { gt: modulo.order }
+      },
+      data: {
+        order: { decrement: 1 }
+      }
+    })
+    
+    console.log('✅ Módulo eliminado y orden recalculado:', modulo.title)
     return NextResponse.json({ success: true, message: 'Módulo eliminado correctamente' })
   } catch (error) {
     console.error('❌ Error al eliminar módulo:', error)
